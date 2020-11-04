@@ -17,7 +17,7 @@ import React, { useContext, useReducer } from "react";
 const initialState = {
     text:'treść'
 }
-//REACT CONTEXT
+//REACT CONTEXT - 'STORE'
 const ctx = React.createContext({
     state: initialState,
     actions:{
@@ -49,18 +49,18 @@ function reducer(state = initialState, action){
 }
 
 const Provider = ({children, onLoad, onChange}) => {
-    
+    const context = useContext(ctx)
     // tutaj łączymy context i actions i wrzucamy je do providera
     // prop onLoad powinien wywołać się na wczytaniu komponentu
     // prop onChange powinien wywołać się na zmianie stanu
     // return ...
 
-    const [text, dispatchText] = useReducer(actions.changeText, initialState)
+    const [text, dispatchText] = useReducer(reducer, initialState)
     
     return (
-        <ctx.Provider value={[text, dispatchText]}>
+        <context.Provider value={[text, dispatchText]}>
             {children}
-        </ctx.Provider>
+        </context.Provider>
     )
 }
 
@@ -68,8 +68,10 @@ const useContextState = ({stateNames=['text']})=>{
     // jeśli stateNames jest pusty to zwraca cały state
     // jeśli stateNames nie jest pusty to zwraca podane w arrayu klucze i wartości w formie nowego obiektu
     // return ...
-    if (stateNames === null) { return ctx.state }
-    return { ...ctx.state, stateNames }
+    const context = useContext(ctx)
+
+    if (stateNames === null) { return context.state }
+    return { ...context.state, stateNames }
 }
 
 const useContextActions = ({actions=["changeText"]})=>{
@@ -78,7 +80,11 @@ const useContextActions = ({actions=["changeText"]})=>{
     // return ...
 }
 
-const useContextActionsAndStore = ({actions=["changeText"], stateNames=['text']})=>{
+const useContextActionsAndState = ({actions=["changeText"], stateNames=['text']})=>{
     // suma logiki powyżej
     // return ...
+
+    useContextActions(); 
+    useContextState();
+
 }
