@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useReducer } from "react";
 // Logika Reduxa w React składa się z 5 prostych elementów:
 // - struktury danych - tzn store/state - komórka pamięci z aktualnym stanem wszystkich danych
 // - reducera, który agreguje akcje i zmienia wg nich aktualny stan store
@@ -17,7 +17,7 @@ import React from "react";
 const initialState = {
     text:'treść'
 }
-
+//REACT CONTEXT
 const ctx = React.createContext({
     state: initialState,
     actions:{
@@ -25,16 +25,20 @@ const ctx = React.createContext({
     }
 })
 
+// ACTION TYPE
+const TEXT_CHANGED= 'TEXT_CHANGED';
+
+//ACTION
 const actions = {
     changeText:(state, action)=>({
-        type: 'TEXT_CHANGED',
-        // payload: text
+        type: TEXT_CHANGED,
+        payload: action
     })
 }
-
+//REDUCER
 function reducer(state = initialState, action){
     switch (action.type) {
-        case actions.textChanged:
+        case TEXT_CHANGED:
             return {
                 ...state,
                 text: action.payload
@@ -51,12 +55,21 @@ const Provider = ({children, onLoad, onChange}) => {
     // prop onChange powinien wywołać się na zmianie stanu
     // return ...
 
+    const [text, dispatchText] = useReducer(actions.changeText, initialState)
+    
+    return (
+        <ctx.Provider value={[text, dispatchText]}>
+            {children}
+        </ctx.Provider>
+    )
 }
 
 const useContextState = ({stateNames=['text']})=>{
     // jeśli stateNames jest pusty to zwraca cały state
     // jeśli stateNames nie jest pusty to zwraca podane w arrayu klucze i wartości w formie nowego obiektu
     // return ...
+    if (stateNames === null) { return ctx.state }
+    return { ...ctx.state, stateNames }
 }
 
 const useContextActions = ({actions=["changeText"]})=>{
