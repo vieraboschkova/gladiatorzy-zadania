@@ -23,6 +23,8 @@ li {
     left: 50%;
     transform: translate(-50%, -50%);
     box-shadow: 5px 10px 18px #888888;
+
+    
 }
 .header-container {
     margin: 1rem 0;
@@ -46,8 +48,11 @@ li {
     flex-direction: row;
     justify-content: center;
     height: 200px;
-    padding: 1.75rem;
+    /* width: 100%; */
+    margin: 1.75rem;
     align-items: center;
+    overflow: hidden;
+    position: relative;
   }
 
 .picker {
@@ -56,13 +61,20 @@ li {
     flex-direction: column;
     flex: 1;
     width: 30%;
-
+    height: 100%;
     /* align-self: center; */
     list-style-type: none;
     text-align: left;
-    overflow: hidden;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    /* width: calc(100% + 15px); */
+    scrollbar-width: none;
 }
-
+.picker::-webkit-scrollbar {
+    /* width: 0;
+    height: 0; */
+    display: none;
+}
 .day-picker {
     flex: 1;
 }
