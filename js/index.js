@@ -37,7 +37,7 @@ function getCorrectNumberOfDays(month, year) {
     }
 }
 
-const monthsNames = [ 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const monthsNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 const dayList = document.getElementById('dayPicker');
 const monthList = document.getElementById('monthPicker');
@@ -78,7 +78,6 @@ class DatePicker {
         this.currentMonth = currentDate.getMonth();
         this.currentYear = currentDate.getFullYear();
         console.log(`initiating with: ${this.currentDay}/${this.currentMonth}/${this.currentYear}`)
-        // this.populateList(this.currentYear, this.yearsArray, 'year', 9999, yearList) //change to all after all lists prepared
         this.populateAllLists()
     }
 
@@ -94,69 +93,56 @@ class DatePicker {
         const itemsAfter = [];
 
         for (let i = 1; i < 4; i += 1) {
-            if (currentDate >= 3) {
-                itemsBefore[i] = currentDate - i;
+            if (middleItem >= 3) {
+                itemsBefore[i] = middleItem - i;
+
+            } else {
+                itemsBefore[i] = limit - i;
             }
+            // console.log(itemsBefore[i])
         }
         itemsBefore.reverse().pop()
 
         for (let i = 1; i < 4; i += 1) {
-            if (currentDate <= limit) {
-                itemsAfter[i] = currentDate + i;
+            const nextItem = middleItem + i;
+            if (nextItem > limit) {
+                itemsAfter[i] = middleItem - limit + i;
+
+            } else {
+                itemsAfter[i] = middleItem + i;
             }
+            // console.log(itemsAfter[i])
         }
         itemsAfter.shift()
 
         const createdArray = itemsBefore.concat(middleItem, itemsAfter);
+        // console.log(createdArray)
         if (type === 'month') {
             const translatedArray = []; 
             createdArray.map((item, index) => {
-                translatedArray[index] = monthsNames[item];
+                translatedArray[index] = monthsNames[item % limit];
             });
+            // console.log(translatedArray)
             return translatedArray;
         }
 
-        console.log(createdArray)
-
-        switch(type) {
-            case 'day':
-                console.log('day')
-                break;
-            case 'month':
-                console.log('month')
-                
-                break;
-            case 'year':
-                console.log('year')
-                break;
-            default:
-                console.log('default' + currentDateType)
-        }
         return createdArray;
     }
 
     populateList (currentItem, currentItemsArray, type, limit, parent) {
         currentItemsArray = this.createAdjacentItems(currentItem, type, limit);
-        console.log('created' + currentItemsArray)
+        // console.log('created' + currentItemsArray)
         currentItemsArray.forEach((item) => {
             this.createDateElement(item, parent);
-            console.log('creating LI')
+            // console.log('creating LI')
         })
     }
 
     populateAllLists () {
         this.populateList(this.currentDay, this.daysArray, 'day', getCorrectNumberOfDays(this.currentMonth, this.currentYear), dayList);
-        this.populateList(this.currentMonth, this.monthsArray, 'month', 10, monthList);
+        this.populateList(this.currentMonth, this.monthsArray, 'month', 12, monthList);
         this.populateList(this.currentYear, this.yearsArray, 'year', 9999, yearList)
     }
-
-    // createDaysArray () {
-    //     const numberOfDays = getCorrectNumberOfDays(this.month, this.year);
-    //     const daysArray = new Array(7);
-    //     const isInDaysRange = (number) => number > 0 && number <= numberOfDays;
-
-    //     console.log(daysArray)
-    // }
 
 }
 
