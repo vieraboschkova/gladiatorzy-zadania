@@ -55,13 +55,15 @@ li {
     position: relative;
   }
 
+
+
 .picker {
     /* outline: blueviolet solid 3px; */
     display: flex;
     flex-direction: column;
     flex: 1;
     width: 30%;
-    height: 100%;
+    height: 67%;
     /* align-self: center; */
     list-style-type: none;
     text-align: left;
@@ -69,12 +71,32 @@ li {
     overflow-x: hidden;
     /* width: calc(100% + 15px); */
     scrollbar-width: none;
+    align-content: center;
 }
 .picker::-webkit-scrollbar {
     /* width: 0;
     height: 0; */
     display: none;
 }
+
+.date-picker-shades {
+    background-color: white;
+    opacity: .7;
+    width: 100%;
+    height: 85px;
+    position: absolute;
+}
+
+.shade-before {
+    border-bottom: slategrey solid 1px;
+    top: 0;
+
+}
+.shade-after {
+    border-top: slategrey solid 1px;
+    bottom: 0;
+}
+
 .day-picker {
     flex: 1;
 }
@@ -87,8 +109,8 @@ li {
 }
 
 .date-current {
-    border-top: slategrey solid 1px;
-    border-bottom: slategrey solid 1px;
+    /* border-top: slategrey solid 1px;
+    border-bottom: slategrey solid 1px; */
 }
 
 .date-one-difference {
