@@ -43,19 +43,13 @@ const dayList = document.getElementById('dayPicker');
 const monthList = document.getElementById('monthPicker');
 const yearList = document.getElementById('yearPicker');
 
+const pickersArray = [dayList, monthList, yearList];
 /*------------------- HANDLING INITIAL SCROLL ------------------------------------- */
-
-// function scrollToMiddle (element) {
-//     const thirdChild = element.children[3]
-//     console.log(thirdChild);
-//     thirdChild.scrollIntoView({behavior: "smooth", block: "center"})
-//     // console.log(thirdChild);
-// }
 
 function scrollThreeToMiddle(elementsArray) {
     elementsArray.forEach(function (elementItem) {
             // console.log(elementItem)
-            elementItem.scrollTo(0,28);
+            elementItem.scrollTo(0,33);
         });
 }
 
@@ -69,22 +63,26 @@ class DatePicker {
         this.daysArray;
         this.monthsArray;
         this.yearsArray;
+        this.lenghtOfArrays = 7;
     }
 
-    init () {
-        const currentDate = new Date();
+    init (currentDate) {
+        // const currentDate = new Date();
         console.log(currentDate)
         this.currentDay = currentDate.getDate();
         this.currentMonth = currentDate.getMonth();
         this.currentYear = currentDate.getFullYear();
         console.log(`initiating with: ${this.currentDay}/${this.currentMonth}/${this.currentYear}`)
-        this.populateAllLists()
+        this.populateAllLists();
+        return this;
     }
 
     createDateElement (item, parent) {
         let newDateElement = document.createElement('li');
         newDateElement.innerHTML = item;
-        parent.append(newDateElement);
+        if (parent) {
+            parent.append(newDateElement);
+        }
     }
 
     createAdjacentItems (currentDate, type, limit) {
@@ -120,7 +118,8 @@ class DatePicker {
         if (type === 'month') {
             const translatedArray = []; 
             createdArray.map((item, index) => {
-                translatedArray[index] = monthsNames[item % limit];
+                // translatedArray[index] = monthsNames[item % limit];
+                translatedArray[index] = this.convertNumberToMonthName(item);
             });
             // console.log(translatedArray)
             return translatedArray;
@@ -144,45 +143,161 @@ class DatePicker {
         this.populateList(this.currentYear, this.yearsArray, 'year', 9999, yearList)
     }
 
-}
+    // addItemBeforeFirstAndRemoveLast (element) {
 
-new DatePicker().init()
+    // }
 
+    updateCurrentDate (array) {
+        // this.currentDay = 
+        // this.currentMonth = 
+        // this.currentYear = 
+    }
 
-scrollThreeToMiddle([dayList, monthList, yearList])
+    convertMonthNameToIndex(monthName) {
+        return monthsNames.indexOf(monthName);
+    }
+    
+    convertNumberToMonthName(number) {
+        return monthsNames[number % 12];
+    }
 
+    convertInnerTextToNumber (text) {
+        return parseInt(text);
+    }
 
-// moveDatesScrollMiddlePosition(yearList);
-// function createDateElement (classNames, innerHTML, parent) {
-//     let newDateElement = document.createElement('li');
-//     if (classNames) {
-//         newDateElement.classList.add(classNames);
-//     }
-//     if (innerHTML) {
-//         newDateElement.innerHTML = innerHTML;
-//     }
-//     parent.append(newDateElement);
-//     // return newDateElement;
-// }
+    addItemsToListWhileScrollUp (element) {
+        // console.log('gonna add up to: ' + element.id);
+        // console.log('children: ')
+        // console.log(element.children);
+        const isAMonth = element.id === 'monthPicker';
+        const elementsChildren = element.children;
+        const firstChild = elementsChildren[0];
+        const lastChild = elementsChildren[this.lenghtOfArrays - 1];
+        // console.log('last: ')
+        // console.log(lastChild);
+        let firstChildsValue;
+        let itemToInsertBefore;
+        if (isAMonth) {
+            firstChildsValue = this.convertMonthNameToIndex(firstChild.innerText);
+            itemToInsertBefore = (firstChildsValue - 1) //INSERT LOGIC!!!
 
-// function dateListItemsCreator(parent, childrenArr) {
+        } else { firstChildsValue = this.convertInnerTextToNumber(firstChild.innerText) }
+        // console.log('first value: ')
+        // console.log(firstChildsValue);
+        element.append
+    }
 
-//     if (childrenArr && parent) {
-//         childrenArr.forEach(element => {
-//             parent.append(element);
-//         })
-//     }
-// }
-
-// function dateListItem () {
-//     let newDateListItem = createDateElement(null,null,'from js');
-//     return newDateListItem;
-// } 
-
-function handleMouseMove (event) {
-    if (event.target === yearList) {
-        console.log("mouse location:", event.clientX, event.clientY)
+    addItemsToListWhileScrollDown (element) {
+        console.log('gonna add down')
+        console.log('children: ')
+        console.log(element.children);
+        const isAMonth = element.id === 'monthPicker';
+        console.log(isAMonth)
+        const elementsChildren = element.children;
+        const lastChild = element.lastChild;
+        let lastChildsValue;
+        if (isAMonth) {
+            lastChildsValue = this.convertMonthNameToIndex(lastChild.innerText)
+        } else { lastChildsValue = this.convertInnerTextToNumber(lastChild.innerText) }
+        console.log('last value: ')
+        console.log(lastChildsValue);
     }
 }
 
-document.addEventListener("mouseover", handleMouseMove);
+/*------------------- INITIATE DATE PICKER WITH CURRENT VALUE ------------------------------------- */
+
+const datePickerCreated = new DatePicker().init(new Date())
+
+/*------------------- SCROLL DATES TO THE CURRENT IN THE MIDDLE ------------------------------------- */
+
+scrollThreeToMiddle(pickersArray)
+
+/*------------------- EVENT LISTENERS HANDLERS ------------------------------------- */
+
+function handleMouseMove (event) {
+    // if (yearItems.includes(event.target)) {
+        console.log("mouse location:", event.clientX, event.clientY)
+        console.log(event.target)
+    // }
+}
+// function createDateElement (item, parent) {
+//     let newDateElement = document.createElement('li');
+//     newDateElement.innerHTML = item;
+//     if (parent) {
+//         parent.append(newDateElement);
+//     }
+// }
+
+// function addItemsToListWhileScrollUp(element) {
+//     console.log(element.children)
+//     const currentFirstElement = element.children[0];
+//     const currentLastElement = element.children[element.children.length - 1];
+//     const currentFirstValue = currentFirstElement.innerHTML;
+//     // console.log(currentFirstElement, currentFirstValue)
+//     createDateElement(currentFirstValue-1, element);
+//     element.removeChild(currentLastElement)
+//     console.log(element.children)
+// }
+
+// function addItemsToListWhileScrollDown(element) {
+//     // console.log(element.children)
+//     const currentFirstElement = element.children[0];
+//     const currentLastElement = element.children[element.children.length - 1];
+//     const currentLastValue = currentLastElement.innerText;
+//     // console.log(currentLastElement, currentLastValue)
+//     const newValueToAddOnTheBottom = parseInt(currentLastValue) + 1;
+//     createDateElement(newValueToAddOnTheBottom, element);
+//     element.removeChild(currentFirstElement)
+//     // console.log(element.children)
+// }
+
+let lastScrollValue;
+function isScrollingUp (event) {
+    const elementsScroll = event.target.scrollTop;
+    if (lastScrollValue === undefined) {
+        lastScrollValue = elementsScroll;
+    }
+    if (elementsScroll > lastScrollValue) {
+        // console.log('down')
+        lastScrollValue = elementsScroll;
+        return false;
+    }
+    if (elementsScroll < lastScrollValue) {
+        // console.log('up')
+        lastScrollValue = elementsScroll;
+        return true;
+    }
+    // console.log(elementsScroll, lastScrollValue)
+}
+
+function handleScrollEvent (scrollGoingUp, event) {
+    const scrollUp = scrollGoingUp
+    // console.log(datePickerCreated);
+    console.log('scroll going up: ' + scrollUp);
+    if (scrollUp) {
+        console.log ('adding dates up')
+        datePickerCreated.addItemsToListWhileScrollUp(event.target);
+    } else {
+        console.log ('adding dates down')
+        datePickerCreated.addItemsToListWhileScrollDown(event.target);
+    }
+}
+
+/*------------------- ADD EVENT LISTENERS  ------------------------------------- */
+
+// pickersArray.forEach(item => item.addEventListener("mouseover", handleMouseMove, false));
+let isScrolling = false;
+
+pickersArray.forEach(item => item.addEventListener("scroll", function(event) {
+    const scrollUp = isScrollingUp(event);
+    // console.log(scrollUp)
+    if (!isScrolling) {
+        // console.log('isnt')
+        setTimeout(function() {
+            handleScrollEvent(scrollUp, event);
+            isScrolling = false;
+        }, 300)
+    }
+    isScrolling = true;
+    // console.log('is')
+}))

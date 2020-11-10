@@ -49,13 +49,31 @@ li {
     justify-content: center;
     height: 200px;
     /* width: 100%; */
-    margin: 1.75rem;
+    margin: 1.75rem 0;
     align-items: center;
     overflow: hidden;
     position: relative;
   }
 
+.date-picker-container::before, .date-picker-container::after {
+content: '';
+position: absolute;
+background-color: rgb(223, 223, 223);
+height: 40%;
+width: 100%;
+opacity: 0.5;
+}
 
+.date-picker-container::before {
+    border-bottom: 1px solid gray;
+    top: 0;
+}
+
+.date-picker-container::after {
+    border-top: 1px solid gray;
+    bottom: 0;
+    z-index: -1;
+}
 
 .picker {
     /* outline: blueviolet solid 3px; */
@@ -63,15 +81,17 @@ li {
     flex-direction: column;
     flex: 1;
     width: 30%;
-    height: 67%;
+    height: 90%;
     /* align-self: center; */
     list-style-type: none;
-    text-align: left;
+    text-align: center;
     overflow-y: scroll;
     overflow-x: hidden;
     /* width: calc(100% + 15px); */
     scrollbar-width: none;
     align-content: center;
+    position: relative;
+    line-height: 1.5em;
 }
 .picker::-webkit-scrollbar {
     /* width: 0;
