@@ -14,12 +14,17 @@ function getCorrectNumberOfDays(month, year) {
     const isLeapYear = isALeapYear(year);
     switch (month) {
         case 'Apr':
+        case 3:
         case 'Jun':
+        case 5:
         case 'Sep':
+        case 8:
         case 'Nov':
+        case 10:
             console.log('thirty');
             return 30;
         case 'Feb':
+        case 1:
             if (isLeapYear) {
                 console.log('29 leap');
                 return 29;
@@ -40,17 +45,17 @@ const yearList = document.getElementById('yearPicker');
 
 /*------------------- HANDLING INITIAL SCROLL ------------------------------------- */
 
-function scrollToMiddle (element) {
-    const thirdChild = element.children[3]
-    // console.log(thirdChild);
-    thirdChild.scrollIntoView({behavior: "smooth", block: "center"})
-    // console.log(thirdChild);
-}
+// function scrollToMiddle (element) {
+//     const thirdChild = element.children[3]
+//     console.log(thirdChild);
+//     thirdChild.scrollIntoView({behavior: "smooth", block: "center"})
+//     // console.log(thirdChild);
+// }
 
 function scrollThreeToMiddle(elementsArray) {
     elementsArray.forEach(function (elementItem) {
             // console.log(elementItem)
-            scrollToMiddle(elementItem);
+            elementItem.scrollTo(0,28);
         });
 }
 
@@ -61,9 +66,9 @@ class DatePicker {
         this.currentDay = day;
         this.currentMonth = month;
         this.currentYear = year;
-        this.daysArray = new Array(7);
-        this.monthsArray = new Array(7);
-        this.yearsArray = new Array(7);
+        this.daysArray;
+        this.monthsArray;
+        this.yearsArray;
     }
 
     init () {
@@ -73,8 +78,8 @@ class DatePicker {
         this.currentMonth = currentDate.getMonth();
         this.currentYear = currentDate.getFullYear();
         console.log(`initiating with: ${this.currentDay}/${this.currentMonth}/${this.currentYear}`)
-        this.populateList(this.currentYear, yearList) //change to all after all lists prepared
-        this.createAdjacentMonthItems ()
+        // this.populateList(this.currentYear, this.yearsArray, 'year', 9999, yearList) //change to all after all lists prepared
+        this.populateAllLists()
     }
 
     createDateElement (item, parent) {
@@ -83,72 +88,66 @@ class DatePicker {
         parent.append(newDateElement);
     }
 
-    createAdjacentDayItems () {
-        
+    createAdjacentItems (currentDate, type, limit) {
+        const middleItem = currentDate;
+        const itemsBefore = [];
+        const itemsAfter = [];
+
+        for (let i = 1; i < 4; i += 1) {
+            if (currentDate >= 3) {
+                itemsBefore[i] = currentDate - i;
+            }
+        }
+        itemsBefore.reverse().pop()
+
+        for (let i = 1; i < 4; i += 1) {
+            if (currentDate <= limit) {
+                itemsAfter[i] = currentDate + i;
+            }
+        }
+        itemsAfter.shift()
+
+        const createdArray = itemsBefore.concat(middleItem, itemsAfter);
+        if (type === 'month') {
+            const translatedArray = []; 
+            createdArray.map((item, index) => {
+                translatedArray[index] = monthsNames[item];
+            });
+            return translatedArray;
+        }
+
+        console.log(createdArray)
+
+        switch(type) {
+            case 'day':
+                console.log('day')
+                break;
+            case 'month':
+                console.log('month')
+                
+                break;
+            case 'year':
+                console.log('year')
+                break;
+            default:
+                console.log('default' + currentDateType)
+        }
+        return createdArray;
     }
 
-    
-    createAdjacentMonthItems () {
-        const currentMonthsName = monthsNames[this.currentMonth]
-        this.monthsArray[3] = monthsNames[this.currentMonth];
-
-        //get the numbers first, then tranlsate into names
-        console.log(this.monthsArray)
-        const monthsBefore = [];
-        const monthsAfter = [];
-        for (let i = 1; i < 4; i += 1) {
-            if (this.currentMonth >= 3) {
-                monthsBefore[i] = monthsNames[this.currentMonth -i];
-            }
-        }
-        monthsBefore.reverse().pop()
-
-        for (let i = 1; i < 4; i += 1) {
-            if (this.currentYear <= 9997) {
-                monthsAfter[i] = this.currentYear + i;
-            }
-        }
-        monthsAfter.shift()
-
-        this.monthsArray = monthsBefore.concat(this.currentMonth, monthsAfter);
-    }
-
-
-    createAdjacentYearsItems () {
-        this.yearsArray[3] = this.currentYear;
-        const yearsBefore = [];
-        const yearsAfter = [];
-
-        for (let i = 1; i < 4; i += 1) {
-            if (this.currentYear >= 3) {
-                yearsBefore[i] = this.currentYear - i;
-            }
-        }
-        yearsBefore.reverse().pop()
-
-        for (let i = 1; i < 4; i += 1) {
-            if (this.currentYear <= 9997) {
-                yearsAfter[i] = this.currentYear + i;
-            }
-        }
-        yearsAfter.shift()
-
-        this.yearsArray = yearsBefore.concat(this.currentYear, yearsAfter);
-        console.log(this.yearsArray)
-    }
-
-    populateList (currentItem, parent) {
-        this.createAdjacentYearsItems(currentItem);
-        this.yearsArray.forEach((item) => {
+    populateList (currentItem, currentItemsArray, type, limit, parent) {
+        currentItemsArray = this.createAdjacentItems(currentItem, type, limit);
+        console.log('created' + currentItemsArray)
+        currentItemsArray.forEach((item) => {
             this.createDateElement(item, parent);
             console.log('creating LI')
         })
     }
 
     populateAllLists () {
-        this.populateList(this.currentDay, dayList);
-        this.populateList(this.currentMonth, monthList);
-        this.populateList(this.currentYear, yearList);
+        this.populateList(this.currentDay, this.daysArray, 'day', getCorrectNumberOfDays(this.currentMonth, this.currentYear), dayList);
+        this.populateList(this.currentMonth, this.monthsArray, 'month', 10, monthList);
+        this.populateList(this.currentYear, this.yearsArray, 'year', 9999, yearList)
     }
 
     // createDaysArray () {
@@ -165,6 +164,8 @@ new DatePicker().init()
 
 
 scrollThreeToMiddle([dayList, monthList, yearList])
+
+
 // moveDatesScrollMiddlePosition(yearList);
 // function createDateElement (classNames, innerHTML, parent) {
 //     let newDateElement = document.createElement('li');
