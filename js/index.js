@@ -21,18 +21,14 @@ function getCorrectNumberOfDays(month, year) {
         case 8:
         case 'Nov':
         case 10:
-            // console.log('thirty');
             return 30;
         case 'Feb':
         case 1:
             if (isLeapYear) {
-                // console.log('29 leap');
                 return 29;
             }
-            // console.log('28 not leap');
             return 28;
         default:
-            // console.log('thirty one');
             return 31;
     }
 }
@@ -44,17 +40,43 @@ const monthList = document.getElementById('monthPicker');
 const yearList = document.getElementById('yearPicker');
 
 const allDateTypeLists = [dayList, monthList, yearList];
-/*------------------- HANDLING INITIAL SCROLL ------------------------------------- */
+/*------------------- HANDLING SCROLL ------------------------------------- */
 
-function scrollToMiddle(element) {
-    element.scrollTo(0,25);
+function scrollBy(element, valueOfScroll) {
+    console.log('adjust scroll position after swipe or scroll BY: ' + valueOfScroll)
+    console.log(element.scrollTop)
+    const scrollTopIsZero = element.scrollTop === 0;
+    if (valueOfScroll && !scrollTopIsZero) {
+        element.scrollBy(0, valueOfScroll);
+    }
+}
+
+function scrollTo(element, valueOfScroll) {
+    console.log('adjust scroll position after swipe or scroll TO: ' + valueOfScroll)
+    console.log('scrollTop' + element.scrollTop)
+    element.scrollTop = 0;
+
+    if (valueOfScroll) {
+        element.scrollTo(0, valueOfScroll);
+    }
+}
+
+function scrollWithTouch(element, valueOfScroll, newScrollTopPosition) {
+    console.log('adjust scroll position after swipe or scroll TO: ' + valueOfScroll)
+    // console.log('scrollTop: ' + element.scrollTop)
+    // const scrollTopIsNotZero = element.scrollTop !== 0;
+    // console.log('scrollHeight assigned: ' + element.scrollHeight)
+    // if (valueOfScroll && scrollTopIsNotZero) {
+        element.scrollTo(0, 0);
+        console.log(element)
+        // element.scrollTop = 0;
+    // }
+    console.log('scrollTopEND' + element.scrollTop)
 }
 
 function scrollThreeToMiddle(elementsArray) {
     elementsArray.forEach(function (elementItem) {
-            // console.log(elementItem)
-            // elementItem.scrollTo(0,33);
-            scrollToMiddle(elementItem);
+            scrollTo(elementItem, 25);
         });
 }
 
@@ -72,7 +94,6 @@ class DatePicker {
     }
 
     init (currentDate) {
-        // console.log(currentDate)
         this.currentDay = currentDate.getDate();
         this.currentMonth = currentDate.getMonth();
         this.currentYear = currentDate.getFullYear();
@@ -276,11 +297,10 @@ class DatePicker {
         itemToInsertBefore = this.createDateElement(valueToInsertBefore, null);
         firstChild.insertAdjacentElement('beforebegin', itemToInsertBefore);
         element.removeChild(lastChild);
-        scrollToMiddle(element);
         this.updateCurrentDateData(element);
     }
 
-    addItemsToListWhileScrollDown (element) {
+    addItemsToListWhileScrollDown (element, scrollValue) {
         const isADay = element.id === 'dayPicker';
         const isAMonth = element.id === 'monthPicker';
         const isAYear = element.id === 'yearPicker';
@@ -312,7 +332,6 @@ class DatePicker {
         itemToInsertAfter = this.createDateElement(valueToInsertAfter, null);
         lastChild.insertAdjacentElement('afterend', itemToInsertAfter);
         element.removeChild(firstChild);
-        scrollToMiddle(element);
         this.updateCurrentDateData(element);
     }
 }
@@ -321,17 +340,47 @@ class DatePicker {
 
 const datePickerCreated = new DatePicker().init(new Date())
 
-/*------------------- SCROLL DATES TO THE CURRENT IN THE MIDDLE ------------------------------------- */
+/*------------------- SCROLL INITIAL DATES TO THE CURRENT IN THE MIDDLE ------------------------------------- */
 
 scrollThreeToMiddle(allDateTypeLists)
 
 /*------------------- EVENT LISTENERS HANDLERS ------------------------------------- */
 
+/* *** SCROLLING WITH ARROWS ON MOUSEOVER *** */
+let isHovering = false;
+let keyEventElement;
+function handleKeyUp (event) {
+    const isArrowUp = event.code === 'ArrowUp';
+    const isArrowDown = event.code === 'ArrowDown';
+
+    if (isHovering) {
+        
+        if (isArrowUp) {
+            datePickerCreated.addItemsToListWhileScrollUp(keyEventElement)
+            scrollTo(keyEventElement, 25);
+        }
+
+        if (isArrowDown) {
+            datePickerCreated.addItemsToListWhileScrollDown(keyEventElement)
+            scrollTo(keyEventElement, 25);
+        }
+
+    }
+}
+
 function handleMouseOver (event) {
-    // if (yearItems.includes(event.target)) {
-        console.log("mouse location:", event.clientX, event.clientY)
-        console.log(event.target)
-    // }
+        isHovering = true;
+        keyEventElement = event.target;
+        const targetIsAListItem = event.target.tagName === 'LI';
+
+        if (targetIsAListItem) {
+            keyEventElement = event.target.parentNode;
+        }
+}
+
+function handleMouseOut (event) {
+        isHovering = false;
+        keyEventElement = undefined;
 }
 
 // GET SCROLL DIRECTION
@@ -360,13 +409,54 @@ function handleScrollEvent (scrollGoingUp, element) {
     }
 }
 
+/* *** SCROLLING ON TOUCH *** */
+let touchStartPosition;
+let touchDirection;
+function handleTouchStart(event) {
+    touchDirection = 0;
+    event.preventDefault(); 
+    touchStartPosition = event.touches[0].clientY;
+}
+
+function handleTouchMove(event) {
+    event.preventDefault(); 
+    let touchEndPosition = event.touches[event.touches.length - 1].clientY;
+    touchDirection = touchStartPosition - touchEndPosition;
+    // console.log(event.target)
+    // console.log(touchDirection)
+}
+
+function handleTouchEnd(event) {
+    let elementToSwipe;
+    const swipingTheList = event.target.tagName === 'LI';
+    
+    if (swipingTheList) {
+        elementToSwipe = event.target.parentNode;
+        const swipingUp = touchDirection > 0;
+        const swipingDown = touchDirection < 0;
+        // const swipeAdjust = 0;
+        if (swipingUp) {
+            elementToSwipe.scrollTop = 25;
+            datePickerCreated.addItemsToListWhileScrollDown(elementToSwipe);
+            // elementToSwipe.scrollTop = 25;
+            // scrollTo(elementToSwipe, 25);
+            scrollWithTouch(elementToSwipe, 25, 1);
+        } else if (swipingDown){
+            datePickerCreated.addItemsToListWhileScrollUp(elementToSwipe);
+            // elementToSwipe.scrollTop = 25;
+            scrollWithTouch(elementToSwipe, 25, 1);
+        }
+        
+    }
+    // scrollTo(elementToSwipe, 0);
+    // scrollBy(elementToSwipe, 25);
+    console.log('tpuch ended')
+}
 /*------------------- ADD EVENT LISTENERS  ------------------------------------- */
 
-// allDateTypeLists.forEach(item => item.addEventListener("mouseover", handleMouseMove, false));
 let isScrolling = false;
 let scrollUp;
 let wheelEvent = false;
-
 
 allDateTypeLists.forEach(item => item.addEventListener("wheel", function(event) {
     let scrollTargetElement = event.target;
@@ -393,3 +483,11 @@ allDateTypeLists.forEach(item => item.addEventListener("scroll", function(event)
     }
     isScrolling = true;
 }))
+
+allDateTypeLists.forEach(item => item.addEventListener('touchstart', handleTouchStart, false));
+allDateTypeLists.forEach(item => item.addEventListener('touchmove', handleTouchMove, false));
+allDateTypeLists.forEach(item => item.addEventListener('touchend', handleTouchEnd, false));
+allDateTypeLists.forEach(item => item.addEventListener('mouseover', handleMouseOver, false));
+allDateTypeLists.forEach(item => item.addEventListener('mouseout', handleMouseOut, false));
+document.addEventListener('keyup', handleKeyUp, false);
+
