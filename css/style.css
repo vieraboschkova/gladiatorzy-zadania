@@ -1,8 +1,10 @@
+/*-------------------GENERAL RESET------------------------------------- */
 html,
 body {
   height: 100%;
   margin: 0;
 }
+
 ul {
     margin: 0;
     padding: 0;
@@ -12,6 +14,7 @@ li {
     padding-left: unset;
 }
 
+/*-------------------PAGE CONTAINER------------------------------------- */
 .page-container {
     width: 200px;
     height: 440px;
@@ -23,18 +26,21 @@ li {
     left: 50%;
     transform: translate(-50%, -50%);
     box-shadow: 5px 10px 18px #888888;
-
-    
 }
+
+/*-------------------HEADER------------------------------------- */
 .header-container {
     margin: 1rem 0;
     padding: 1rem;
 }
+
+/*-------------------DATE PICKER CONTAINER------------------------------------- */
 .date-picker-text {
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-size: 1.5rem;
     margin: 0;
 }
+
 .blue-text {
     color: blue;
 }
@@ -47,21 +53,21 @@ li {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    height: 200px;
-    /* width: 100%; */
+    height: 170px;
     margin: 1.75rem 0;
     align-items: center;
     overflow: hidden;
     position: relative;
-  }
+}
 
+/*----SHADES ABOVE NOT CURRENT ITEMS---- */
 .date-picker-container::before, .date-picker-container::after {
-content: '';
-position: absolute;
-background-color: rgb(223, 223, 223);
-height: 40%;
-width: 100%;
-opacity: 0.5;
+    content: '';
+    position: absolute;
+    background-color: rgb(223, 223, 223);
+    height: 40%;
+    width: 100%;
+    opacity: 0.5;
 }
 
 .date-picker-container::before {
@@ -75,46 +81,30 @@ opacity: 0.5;
     z-index: -1;
 }
 
+/*----DATE LIST ITEMS---- */
 .picker {
-    /* outline: blueviolet solid 3px; */
     display: flex;
     flex-direction: column;
     flex: 1;
     width: 30%;
-    height: 90%;
-    /* align-self: center; */
+    height: 88%;
     list-style-type: none;
     text-align: center;
     overflow-y: scroll;
-    overflow-x: hidden;
-    /* width: calc(100% + 15px); */
-    scrollbar-width: none;
+    /* overflow-x: hidden; */
+    /* scrollbar-width: none; */
     align-content: center;
     position: relative;
     line-height: 1.5em;
+    scroll-behavior: smooth;
 }
+
 .picker::-webkit-scrollbar {
-    /* width: 0;
-    height: 0; */
     display: none;
 }
 
-.date-picker-shades {
-    background-color: white;
-    opacity: .7;
-    width: 100%;
-    height: 85px;
-    position: absolute;
-}
-
-.shade-before {
-    border-bottom: slategrey solid 1px;
-    top: 0;
-
-}
-.shade-after {
-    border-top: slategrey solid 1px;
-    bottom: 0;
+.picker > * {
+    /* overflow-anchor: none; */
 }
 
 .day-picker {
@@ -129,8 +119,8 @@ opacity: 0.5;
 }
 
 .date-current {
-    /* border-top: slategrey solid 1px;
-    border-bottom: slategrey solid 1px; */
+    /* text-shadow: 1px 1px 1px #a3a3a3; */
+    /* overflow-anchor: auto; */
 }
 
 .date-one-difference {
@@ -140,13 +130,13 @@ opacity: 0.5;
 }
 
 .date-two-difference {
-    opacity: .6;
+    opacity: .4;
     transform: scale(1, .6);
     line-height: 1.5rem;
 }
 
 .date-three-difference {
-    opacity: .4;
-    transform: scale(1, .4);
-    line-height: 1rem;
+    opacity: .1;
+    transform: scale(1, .6);
+    line-height: 1.5rem;
 }
