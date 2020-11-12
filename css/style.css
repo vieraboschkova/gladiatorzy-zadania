@@ -91,8 +91,8 @@ li {
     list-style-type: none;
     text-align: center;
     overflow-y: scroll;
-    overflow-x: hidden;
-    scrollbar-width: none;
+    /* overflow-x: hidden; */
+    /* scrollbar-width: none; */
     align-content: center;
     position: relative;
     line-height: 1.5em;
@@ -101,6 +101,10 @@ li {
 
 .picker::-webkit-scrollbar {
     display: none;
+}
+
+.picker > * {
+    /* overflow-anchor: none; */
 }
 
 .day-picker {
@@ -116,6 +120,7 @@ li {
 
 .date-current {
     /* text-shadow: 1px 1px 1px #a3a3a3; */
+    /* overflow-anchor: auto; */
 }
 
 .date-one-difference {

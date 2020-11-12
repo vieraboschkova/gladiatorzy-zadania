@@ -61,14 +61,15 @@ function scrollTo(element, valueOfScroll) {
     }
 }
 
-function scrollWithTouch(element, valueOfScroll, newScrollTopPosition) {
+function scrollWithTouch(element, valueOfScroll) {
     console.log('adjust scroll position after swipe or scroll TO: ' + valueOfScroll)
     // console.log('scrollTop: ' + element.scrollTop)
     // const scrollTopIsNotZero = element.scrollTop !== 0;
     // console.log('scrollHeight assigned: ' + element.scrollHeight)
     // if (valueOfScroll && scrollTopIsNotZero) {
-        element.scrollTo(0, 0);
-        console.log(element)
+        element.scrollBy(0, valueOfScroll);
+        // let rect = element.getBoundingClientRect()
+        // console.log(rect.top, rect.height)
         // element.scrollTop = 0;
     // }
     console.log('scrollTopEND' + element.scrollTop)
@@ -412,9 +413,16 @@ function handleScrollEvent (scrollGoingUp, element) {
 /* *** SCROLLING ON TOUCH *** */
 let touchStartPosition;
 let touchDirection;
+let elementToSwipe;
 function handleTouchStart(event) {
+    event.preventDefault();
+    const targetIsAListItem = event.target.tagName === 'LI';
+
+    if (targetIsAListItem) {
+        elementToSwipe = event.target.parentNode;
+    }
+
     touchDirection = 0;
-    event.preventDefault(); 
     touchStartPosition = event.touches[0].clientY;
 }
 
@@ -422,35 +430,30 @@ function handleTouchMove(event) {
     event.preventDefault(); 
     let touchEndPosition = event.touches[event.touches.length - 1].clientY;
     touchDirection = touchStartPosition - touchEndPosition;
-    // console.log(event.target)
-    // console.log(touchDirection)
 }
 
 function handleTouchEnd(event) {
-    let elementToSwipe;
-    const swipingTheList = event.target.tagName === 'LI';
     
+    const swipingTheList = event.target.tagName === 'LI';
+    event.preventDefault();
     if (swipingTheList) {
-        elementToSwipe = event.target.parentNode;
+        
         const swipingUp = touchDirection > 0;
         const swipingDown = touchDirection < 0;
-        // const swipeAdjust = 0;
         if (swipingUp) {
-            elementToSwipe.scrollTop = 25;
+            scrollTo(elementToSwipe, 24);
             datePickerCreated.addItemsToListWhileScrollDown(elementToSwipe);
-            // elementToSwipe.scrollTop = 25;
-            // scrollTo(elementToSwipe, 25);
-            scrollWithTouch(elementToSwipe, 25, 1);
+            
+            
         } else if (swipingDown){
+            scrollTo(elementToSwipe, 24);
             datePickerCreated.addItemsToListWhileScrollUp(elementToSwipe);
-            // elementToSwipe.scrollTop = 25;
-            scrollWithTouch(elementToSwipe, 25, 1);
+            
         }
-        
     }
-    // scrollTo(elementToSwipe, 0);
-    // scrollBy(elementToSwipe, 25);
-    console.log('tpuch ended')
+    elementToSwipe = undefined;
+
+    console.log('touch ended')
 }
 /*------------------- ADD EVENT LISTENERS  ------------------------------------- */
 
