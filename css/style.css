@@ -52,6 +52,10 @@ a:visited {
     margin: 0;
 }
 
+.secondary-header-text {
+    font-size: 1rem;
+}
+
 /* ---------------------MENU -------------------------------------*/
 
 .menu-container {
@@ -185,4 +189,3 @@ a:visited {
     font-weight: 600;
     margin-top: auto;
 }
-
