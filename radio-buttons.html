@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="./css/style.css">
-    
-    <title>Custom Radio Buttons</title>
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon.png">
+    <title>Radio Buttons</title>
   </head>
   <body>
     <div class="page-container">
@@ -13,14 +13,25 @@
         <h1 class="header-text">Pick</h1>
         <h1 class="header-text blue-text">an Option</h1>
       </header>
-      <div class="-container">
-
+      <div class="radio-buttons-container">
+        <form class="radio-buttons-form">
+          <div class="radio-buttons-item">
+            <input type="radio" id="android" name="system" value="android" checked>
+            <label for="android">Android</label>
+            <div class="custom-radio-button android-button"></div>
+          </div>
+          <div class="radio-buttons-item">
+            <input type="radio" id="ios" name="system" value="ios">
+            <label for="ios">iOS</label>
+            <div class="custom-radio-button ios-button"></div>
+          </div>
+        </form>
       </div>
       <footer class="footer-container lightblue-text">
         <a href="index.html">⬅️ Go Back </a>
       </footer>
-
     </div>
+    
     <script language = 'Javascript' src="js/radio-buttons.js"></script>
   </body>
 </html>

@@ -1,3 +1,15 @@
+/* Variables TO INSERT
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+/* :root {
+	--primary-c: ;
+	--secondary-c: ;
+	
+	--white: ;
+	
+	--text: ;	
+	--bg: ;
+} */
+
 /*-------------------GENERAL RESET------------------------------------- */
 html,
 body {
@@ -22,6 +34,12 @@ a {
 }
 a:visited {
     color: mediumblue;
+}
+
+input {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
 }
 
 /*-------------------PAGE CONTAINER------------------------------------- */
@@ -181,6 +199,55 @@ a:visited {
     line-height: 1.5rem;
 }
 
+/******* RADIO BUTTONS **********/
+
+.radio-buttons-container {
+    background-color: #74feee;
+    height: 60%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.radio-buttons-form{
+    background-color:#fdfefd;
+    padding: 1rem 2rem 1rem 3rem;
+    border-radius: 20px 0 0 20px;
+
+}
+
+.radio-buttons-item{
+    font-size: 1.25rem;
+    line-height: 3rem;
+    letter-spacing: .025rem;
+}
+
+.custom-radio-button {
+    width: 26px; 
+    height: 26px;
+	position: absolute;
+	border-radius: 50%;
+    transition: transform .6s cubic-bezier(0.88, -0.55, 0.27, 1.55);
+    transform: translate(-30px, -36px); 
+}
+
+.android-button { 
+    background-color: #47c1b3;
+}
+
+.ios-button { 
+	background-color: #d8f2ef;;
+}
+
+.android-button:checked {
+    transform: translate(-50px, 33px);
+}
+
+.ios-button:checked {
+    transform: translate(-50px, -25px);
+}
+
+/******* FOOTER **********/
 .footer-container {
     /* margin: 1rem 0; */
     padding: 1rem;
