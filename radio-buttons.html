@@ -15,22 +15,28 @@
       </header>
       <div class="radio-buttons-container">
         <form class="radio-buttons-form">
-          <div class="radio-buttons-item">
-            <input type="radio" id="android" name="system" value="android" checked>
-            <label for="android">Android</label>
-            <div class="custom-radio-button android-button"></div>
-          </div>
-          <div class="radio-buttons-item">
-            <input type="radio" id="ios" name="system" value="ios">
-            <label for="ios">iOS</label>
-            <div class="custom-radio-button ios-button"></div>
-          </div>
+          <label class="radio-group android">
+            <input type="radio" checked="checked" name="system">
+            <span class="transition-background android-background-transition-up"></span>
+            <span class="transition-background ios-background-transition-up"></span>
+            <span class="transition-background android-background-transition"></span>
+            <span class="transition-background ios-background-transition"></span>
+
+            <span class="custom-radio android-button"></span>
+            <span class="radio-label">Android</span>
+          </label>
+          <label class="radio-group ios">
+            <input type="radio" name="system">
+            <span class="custom-radio ios-button"></span>
+            <span class="radio-label">iOS</span>
+          </label>
         </form>
       </div>
       <footer class="footer-container lightblue-text">
         <a href="index.html">⬅️ Go Back </a>
       </footer>
     </div>
+    
     
     <script language = 'Javascript' src="js/radio-buttons.js"></script>
   </body>

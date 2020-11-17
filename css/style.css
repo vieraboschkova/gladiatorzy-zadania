@@ -1,14 +1,12 @@
-/* Variables TO INSERT
+/* Variables /////////////TO INSERT
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
-/* :root {
-	--primary-c: ;
-	--secondary-c: ;
-	
-	--white: ;
-	
-	--text: ;	
-	--bg: ;
-} */
+:root {
+	--primary-text-color: blue;
+    --secondary--text-color: lightblue ;
+    
+    --radio-checked-color: #47c1b3;
+    --radio-unchecked-color: #d8f2ef;
+}
 
 /*-------------------GENERAL RESET------------------------------------- */
 html,
@@ -36,11 +34,7 @@ a:visited {
     color: mediumblue;
 }
 
-input {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-}
+
 
 /*-------------------PAGE CONTAINER------------------------------------- */
 .page-container {
@@ -98,7 +92,7 @@ input {
 }
 
 .blue-text {
-    color: blue;
+    color: var(--primary-text-color);
 }
 
 .lightblue-text {
@@ -211,42 +205,206 @@ input {
 
 .radio-buttons-form{
     background-color:#fdfefd;
-    padding: 1rem 2rem 1rem 3rem;
+    padding-right: 1rem;
     border-radius: 20px 0 0 20px;
-
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: 7rem;
 }
 
-.radio-buttons-item{
-    font-size: 1.25rem;
-    line-height: 3rem;
-    letter-spacing: .025rem;
+.android-button {
+    background-color: var(--radio-checked-color);
+    z-index: 4;
+    outline: 2px dotted rgb(205, 66, 50);
+}
+.ios-button {
+    z-index: 3;
+    background-color: var(--radio-unchecked-color);
+    outline: 2px dotted rgb(83, 78, 143);
 }
 
-.custom-radio-button {
-    width: 26px; 
-    height: 26px;
-	position: absolute;
-	border-radius: 50%;
-    transition: transform .6s cubic-bezier(0.88, -0.55, 0.27, 1.55);
-    transform: translate(-30px, -36px); 
+.radio-group {
+    display: flex;
+    position: relative;
+    padding-left: 2.5rem;
+    cursor: pointer;
+    font-size: 1.5rem;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    line-height: 2rem;
+    align-items: center;
+    justify-content: flex-start;
 }
 
-.android-button { 
-    background-color: #47c1b3;
+.radio-label {
+    display: block;
 }
 
-.ios-button { 
-	background-color: #d8f2ef;;
+.radio-group input {
+    position: relative;
+    opacity: 0;
+    cursor: pointer;
+    z-index: 6;
+    transform: scale(2) translateX(-0.5rem);
 }
 
-.android-button:checked {
-    transform: translate(-50px, 33px);
+.custom-radio {
+    position: absolute;
+    height: 1.5rem;
+    width: 1.5rem;
+    border-radius: 50%;
+    left: 1.5rem;
 }
 
-.ios-button:checked {
-    transform: translate(-50px, -25px);
+.radio-group input:checked ~ .ios-button {
+    transform: translate(0, -3rem);
+    transition: transform 1s linear 2s;
+    /* animation: coming-up-radio-unchecked 1s linear 2s 1 forwards; */
 }
 
+.radio-group input:not(:checked) ~ .ios-button {
+    transform: translate(0, 0); 
+    transition: transform 1s linear 1s;
+    /* animation: jumping-radio-unchecked 1s linear 1s 1 forwards; */
+    z-index: 5;
+}
+
+.radio-group input:checked ~ .android-button {
+    /* transform: translate(0, 0rem);
+    transition: transform 1s linear 2s; */
+    animation: coming-up-radio-checked 1s linear 2s 1 forwards;
+}
+.radio-group input:not(:checked) ~ .android-button {
+    /* transform: translate(0, 3rem);
+    transition: transform 1s linear 1s; */
+    animation: jumping-radio-checked 1s linear 1s 1 forwards;
+}
+
+.transition-background {
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: .75rem;
+    position: absolute;
+    left: 1.5rem;
+    visibility: hidden;
+}
+
+.android .android-background-transition {
+    background: var(--radio-unchecked-color);
+    top: .25rem;
+    opacity: 0;
+    height: 4.5rem;
+    outline: 2px dashed red;
+}
+
+.android .ios-background-transition {
+    background: var(--radio-unchecked-color);
+    bottom: -2.75rem;
+    opacity: 1;
+    height: 1.5rem;
+    outline: 2px dotted blue;
+}
+
+.android input:not(:checked) ~ .android-background-transition {
+    height: 1.5rem;
+    opacity: 1;
+    transition: height 1s linear 2s, opacity 0s linear 2s;
+    visibility: visible;
+}
+
+
+.android input:not(:checked) ~ .ios-background-transition {
+    height: 4.5rem;
+    opacity: 0;
+    transition: height 1s linear 0s, opacity 0s linear 2s;
+    visibility: visible;
+}
+
+.android .ios-background-transition-up {
+    background: var(--radio-checked-color);
+    bottom: -2.75rem;
+    opacity: 1;
+    height: 1.5rem;
+    outline: 2px dotted yellowgreen;
+}
+
+.android input:checked ~ .ios-background-transition-up {
+    height: 4.5rem;
+    opacity: 0;
+    transition: height 1s linear 0s, opacity 0s linear 2s;
+    visibility: visible;
+}
+
+.android .android-background-transition-up {
+    background: var(--radio-checked-color);
+    top: 0.25rem;
+    opacity: 1;
+    height: 4.5rem;
+    outline: 2px dotted rgb(192, 50, 205);
+}
+
+.android input:checked ~ .android-background-transition-up {
+    height: 1.5rem;
+    opacity: 1;
+    transition: height 1s linear 2s, opacity 0s linear 2s, visibility 0s linear 2s;
+    visibility: visible;
+}
+
+@keyframes coming-up-radio-checked {
+    from {transform: translateY(3rem); }
+    to{transform: translateY(0rem);}
+}
+
+@keyframes coming-up-radio-unchecked {
+    from {transform: translateY(0rem); }
+    to{transform: translateY(-3rem);}
+}
+
+@keyframes jumping-radio-checked {
+    0% {
+
+    }
+    25% {
+    transform: translateY(3rem); 
+    }
+    50% {
+        transform: translateY(2.5rem);
+    }
+    75% {
+        transform: translateY(3rem);
+    }
+    95% {
+        transform: translateY(2.75rem);
+    }
+    100% {
+        transform: translateY(3rem);
+    }
+  }
+
+  @keyframes jumping-radio-unchecked {
+    0% {
+        transform: translateY(-3rem);
+    }
+    25% {
+    transform: translateY(0rem); 
+    }
+    50% {
+        transform: translateY(-1rem);
+    }
+    75% {
+        transform: translateY(-0rem);
+    }
+    95% {
+        transform: translateY(-.5rem);
+    }
+    100% {
+        transform: translateY(-0rem);
+    }
+  }
+  
 /******* FOOTER **********/
 .footer-container {
     /* margin: 1rem 0; */
