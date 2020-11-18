@@ -227,7 +227,7 @@ a:visited {
 .radio-group {
     display: flex;
     position: relative;
-    padding-left: 2.5rem;
+    padding-left: 1rem;
     cursor: pointer;
     font-size: 1.5rem;
     -webkit-user-select: none;
@@ -238,9 +238,82 @@ a:visited {
     align-items: center;
     justify-content: flex-start;
 }
+.radio-group:active{
+    background-color: transparent;
+    
+}
+.radio-group:focus{
+    background-color: transparent;
+    
+}
+
+.click-effect{
+    content: '';
+    /* background-color: tomato; */
+    border-radius: 50%;
+    width: 2rem;
+    height: 2rem;
+    display: block;
+    border: var(--radio-checked-color) solid 1rem;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 5rem;
+    box-sizing: border-box;
+    opacity: 0;
+    /* transform: scale(0.001, 0.001); */
+}
+
+.click-effect-animation {
+    animation: click-circles 1s linear;
+}
+
+@keyframes click-circles {
+    0%{
+        visibility: visible;
+        opacity: 0;
+    }
+    1%{
+        opacity: .5;
+
+    }
+    5% {
+        /* border-width: 1rem; */
+    }
+    15%{
+        /* background-color: transparent; */
+        border-width: 1rem;
+        transform: scale(.8);
+    }
+    50% {
+        border-width: .5rem;
+        border-width: .9rem;
+    }
+    75% {
+      transform: scale(2, 2);
+      /* opacity: 0.8; */
+      border-width: .35rem;
+    }
+    99% {
+      transform: scale(4, 4);
+      /* opacity: 0.5; */
+      border-width: .1rem;
+    }
+    100% {
+      /* transform: scale(0.001, 0.001); */
+      opacity: 0;
+      visibility: hidden;
+    }
+  }
+
+
+
+
 
 .radio-label {
     display: block;
+    padding-left: 1.5rem;
 }
 
 .radio-group input {
@@ -248,7 +321,7 @@ a:visited {
     opacity: 0;
     cursor: pointer;
     z-index: 6;
-    transform: scale(2) translateX(-0.5rem);
+    transform: scale(2) translateX(0.25rem);
 }
 
 .custom-radio {
@@ -260,15 +333,15 @@ a:visited {
 }
 
 .radio-group input:checked ~ .ios-button {
-    transform: translate(0, -3rem);
-    transition: transform 1s linear 2s;
-    /* animation: coming-up-radio-unchecked 1s linear 2s 1 forwards; */
+    /* transform: translate(0, -3rem);
+    transition: transform 1s linear 2s; */
+    animation: coming-up-radio-unchecked 1s linear 2s 1 both;
 }
 
 .radio-group input:not(:checked) ~ .ios-button {
-    transform: translate(0, 0); 
-    transition: transform 1s linear 1s;
-    /* animation: jumping-radio-unchecked 1s linear 1s 1 forwards; */
+    /* transform: translate(0, 0); 
+    transition: transform 1s linear 1s; */
+    animation: jumping-radio-unchecked 1s linear 1s 1 both;
     z-index: 5;
 }
 
