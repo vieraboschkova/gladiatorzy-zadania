@@ -1,5 +1,4 @@
-/* Variables /////////////TO INSERT
-–––––––––––––––––––––––––––––––––––––––––––––––––– */
+/*  –––––––––––––––––––––––VARIABLES––––––––––––––––––––––––––– */
 :root {
 	--primary-text-color: blue;
     --secondary--text-color: lightblue ;
@@ -34,8 +33,16 @@ a:visited {
     color: mediumblue;
 }
 
+/* HIDE FORST ANIMATIONS */
 
+body.preload * {
+    animation-duration: 0s !important;
+    -webkit-animation-duration: 0s !important;
+}
 
+.hidden {
+    visibility: hidden !important;
+}
 /*-------------------PAGE CONTAINER------------------------------------- */
 .page-container {
     width: 200px;
@@ -68,131 +75,6 @@ a:visited {
     font-size: 1rem;
 }
 
-/* ---------------------MENU -------------------------------------*/
-
-.menu-container {
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
-}
-
-.menu-item {
-    background-color: rgba(223, 223, 223, .6);
-    margin: .75rem 0;
-    font-weight: 600;
-    padding: .5rem;
-    border-radius: 10px;
-}
-
-/*-------------------DATE PICKER CONTAINER------------------------------------- */
-.date-picker-text {
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    font-size: 1.5rem;
-    margin: 0;
-}
-
-.blue-text {
-    color: var(--primary-text-color);
-}
-
-.lightblue-text {
-    color: skyblue;
-}
-
-.date-picker-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    height: 170px;
-    margin: 1.75rem 0;
-    align-items: center;
-    overflow: hidden;
-    position: relative;
-    /* pointer-events: none; */
-}
-
-/*----SHADES ABOVE NOT CURRENT ITEMS---- */
-.date-picker-container::before, .date-picker-container::after {
-    content: '';
-    position: absolute;
-    background-color: rgb(223, 223, 223);
-    height: 40%;
-    width: 100%;
-    opacity: 0.5;
-}
-
-.date-picker-container::before {
-    border-bottom: 1px solid gray;
-    top: 0;
-}
-
-.date-picker-container::after {
-    border-top: 1px solid gray;
-    bottom: 0;
-    z-index: -1;
-}
-
-/*----DATE LIST ITEMS---- */
-.picker {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    width: 30%;
-    height: 88%;
-    list-style-type: none;
-    text-align: center;
-    overflow-y: scroll;
-    /* overflow-x: hidden; */
-    /* scrollbar-width: none; */
-    align-content: center;
-    position: relative;
-    line-height: 1.5em;
-    scroll-behavior: smooth;
-    /* pointer-events: none; */
-}
-
-.picker::-webkit-scrollbar {
-    display: none;
-}
-
-.picker > * {
-    /* overflow-anchor: none; */
-}
-
-.day-picker {
-    flex: 1;
-}
-
-.month-picker {
-    flex: 1.25;
-}
-.year-picker {
-    flex: 1.5;
-}
-
-.date-current {
-    /* text-shadow: 1px 1px 1px #a3a3a3; */
-    /* overflow-anchor: auto; */
-}
-
-.date-one-difference {
-    opacity: .8;
-    transform: scale(1, .8);
-    line-height: 2rem;
-}
-
-.date-two-difference {
-    opacity: .4;
-    transform: scale(1, .6);
-    line-height: 1.5rem;
-}
-
-.date-three-difference {
-    opacity: .1;
-    transform: scale(1, .6);
-    line-height: 1.5rem;
-}
-
 /******* RADIO BUTTONS **********/
 
 .radio-buttons-container {
@@ -216,12 +98,12 @@ a:visited {
 .android-button {
     background-color: var(--radio-checked-color);
     z-index: 4;
-    outline: 2px dotted rgb(205, 66, 50);
+    /* outline: 2px dotted rgb(205, 66, 50); */
 }
 .ios-button {
     z-index: 3;
     background-color: var(--radio-unchecked-color);
-    outline: 2px dotted rgb(83, 78, 143);
+    /* outline: 2px dotted rgb(83, 78, 143); */
 }
 
 .radio-group {
@@ -238,18 +120,17 @@ a:visited {
     align-items: center;
     justify-content: flex-start;
 }
+
 .radio-group:active{
     background-color: transparent;
     
 }
 .radio-group:focus{
     background-color: transparent;
-    
 }
 
-.click-effect{
+.click-effect {
     content: '';
-    /* background-color: tomato; */
     border-radius: 50%;
     width: 2rem;
     height: 2rem;
@@ -262,54 +143,11 @@ a:visited {
     left: 5rem;
     box-sizing: border-box;
     opacity: 0;
-    /* transform: scale(0.001, 0.001); */
 }
 
 .click-effect-animation {
     animation: click-circles 1s linear;
 }
-
-@keyframes click-circles {
-    0%{
-        visibility: visible;
-        opacity: 0;
-    }
-    1%{
-        opacity: .5;
-
-    }
-    5% {
-        /* border-width: 1rem; */
-    }
-    15%{
-        /* background-color: transparent; */
-        border-width: 1rem;
-        transform: scale(.8);
-    }
-    50% {
-        border-width: .5rem;
-        border-width: .9rem;
-    }
-    75% {
-      transform: scale(2, 2);
-      /* opacity: 0.8; */
-      border-width: .35rem;
-    }
-    99% {
-      transform: scale(4, 4);
-      /* opacity: 0.5; */
-      border-width: .1rem;
-    }
-    100% {
-      /* transform: scale(0.001, 0.001); */
-      opacity: 0;
-      visibility: hidden;
-    }
-  }
-
-
-
-
 
 .radio-label {
     display: block;
@@ -333,27 +171,19 @@ a:visited {
 }
 
 .radio-group input:checked ~ .ios-button {
-    /* transform: translate(0, -3rem);
-    transition: transform 1s linear 2s; */
-    animation: coming-up-radio-unchecked 1s linear 2s 1 both;
+    animation: coming-up-radio-unchecked .5s linear 1s 1 both;
 }
 
 .radio-group input:not(:checked) ~ .ios-button {
-    /* transform: translate(0, 0); 
-    transition: transform 1s linear 1s; */
-    animation: jumping-radio-unchecked 1s linear 1s 1 both;
+    animation: jumping-radio-unchecked .5s linear .5s 1 both;
     z-index: 5;
 }
 
 .radio-group input:checked ~ .android-button {
-    /* transform: translate(0, 0rem);
-    transition: transform 1s linear 2s; */
-    animation: coming-up-radio-checked 1s linear 2s 1 forwards;
+    animation: coming-up-radio-checked .5s linear 1s 1 both;
 }
 .radio-group input:not(:checked) ~ .android-button {
-    /* transform: translate(0, 3rem);
-    transition: transform 1s linear 1s; */
-    animation: jumping-radio-checked 1s linear 1s 1 forwards;
+    animation: jumping-radio-checked .5s linear .5s 1 forwards;
 }
 
 .transition-background {
@@ -370,7 +200,7 @@ a:visited {
     top: .25rem;
     opacity: 0;
     height: 4.5rem;
-    outline: 2px dashed red;
+    /* outline: 2px dashed red; */
 }
 
 .android .ios-background-transition {
@@ -378,13 +208,13 @@ a:visited {
     bottom: -2.75rem;
     opacity: 1;
     height: 1.5rem;
-    outline: 2px dotted blue;
+    /* outline: 2px dotted blue; */
 }
 
 .android input:not(:checked) ~ .android-background-transition {
     height: 1.5rem;
     opacity: 1;
-    transition: height 1s linear 2s, opacity 0s linear 2s;
+    transition: height .5s linear 1s, opacity 0s linear 1s;
     visibility: visible;
 }
 
@@ -392,7 +222,7 @@ a:visited {
 .android input:not(:checked) ~ .ios-background-transition {
     height: 4.5rem;
     opacity: 0;
-    transition: height 1s linear 0s, opacity 0s linear 2s;
+    transition: height .5s linear 0s, opacity 0s linear 1s;
     visibility: visible;
 }
 
@@ -401,13 +231,13 @@ a:visited {
     bottom: -2.75rem;
     opacity: 1;
     height: 1.5rem;
-    outline: 2px dotted yellowgreen;
+    /* outline: 2px dotted yellowgreen; */
 }
 
 .android input:checked ~ .ios-background-transition-up {
     height: 4.5rem;
     opacity: 0;
-    transition: height 1s linear 0s, opacity 0s linear 2s;
+    transition: height .5s linear 0s, opacity 0s linear 1s;
     visibility: visible;
 }
 
@@ -416,14 +246,69 @@ a:visited {
     top: 0.25rem;
     opacity: 1;
     height: 4.5rem;
-    outline: 2px dotted rgb(192, 50, 205);
+    /* outline: 2px dotted rgb(192, 50, 205); */
 }
 
 .android input:checked ~ .android-background-transition-up {
     height: 1.5rem;
     opacity: 1;
-    transition: height 1s linear 2s, opacity 0s linear 2s, visibility 0s linear 2s;
+    transition: height .5s linear 1s, opacity 0s linear 1s, visibility 0s linear 1s;
     visibility: visible;
+}
+ 
+.android-to-hide-after-load {
+    position: absolute;
+    height: 1.5rem;
+    width: 1.5rem;
+    border-radius: 50%;
+    left: 1.5rem;
+    top: .25rem;
+    /* outline: teal solid 10px; */
+    background-color: var(--radio-checked-color);
+}
+
+.ios-to-hide-after-load {
+    position: absolute;
+    height: 1.5rem;
+    width: 1.5rem;
+    border-radius: 50%;
+    left: 1.5rem;
+    bottom: .25rem;
+    /* outline: tomato solid 5px; */
+    background-color: var(--radio-unchecked-color);
+}
+
+/****** ANIMATIONS****/
+
+@keyframes click-circles {
+    0%{
+        visibility: visible;
+        opacity: 0;
+    }
+    1%{
+        opacity: .5;
+
+    }
+    15%{
+        border-width: 1rem;
+        transform: scale(.8);
+    }
+    50% {
+        border-width: .5rem;
+        border-width: .9rem;
+    }
+    75% {
+      transform: scale(2, 2);
+      border-width: .35rem;
+    }
+    99% {
+      transform: scale(4, 4);
+      border-width: .1rem;
+    }
+    100% {
+      opacity: 0;
+      visibility: hidden;
+    }
 }
 
 @keyframes coming-up-radio-checked {
@@ -476,14 +361,15 @@ a:visited {
     100% {
         transform: translateY(-0rem);
     }
-  }
-  
+}
+
 /******* FOOTER **********/
+
 .footer-container {
-    /* margin: 1rem 0; */
     padding: 1rem;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-size: 1rem;
     font-weight: 600;
     margin-top: auto;
 }
+

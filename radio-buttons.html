@@ -3,11 +3,11 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/radio-button.css">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon.png">
     <title>Radio Buttons</title>
   </head>
-  <body>
+  <body class="preload">
     <div class="page-container">
       <header class="header-container">
         <h1 class="header-text">Pick</h1>
@@ -18,6 +18,7 @@
           <label class="radio-group android">
             <div class="click-effect"></div>
             <input type="radio" checked="checked" name="system">
+            <span class="android-to-hide-after-load"></span>
             <span class="transition-background android-background-transition-up"></span>
             <span class="transition-background ios-background-transition-up"></span>
             <span class="transition-background android-background-transition"></span>
@@ -28,6 +29,7 @@
           <label class="radio-group ios">
             <div class="click-effect"></div>
             <input type="radio" name="system">
+            <span class="ios-to-hide-after-load"></span>
             <span class="custom-radio ios-button"></span>
             <span class="radio-label">iOS</span>
           </label>
@@ -37,8 +39,6 @@
         <a href="index.html">⬅️ Go Back </a>
       </footer>
     </div>
-    
-    
     <script language = 'Javascript' src="js/radio-buttons.js"></script>
   </body>
 </html>
