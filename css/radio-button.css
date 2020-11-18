@@ -75,6 +75,10 @@ body.preload * {
     font-size: 1rem;
 }
 
+.blue-text {
+    color: var(--primary-text-color);
+}
+
 /******* RADIO BUTTONS **********/
 
 .radio-buttons-container {
@@ -93,6 +97,7 @@ body.preload * {
     flex-direction: column;
     justify-content: space-evenly;
     height: 7rem;
+    box-shadow: 6px 12px 6px -6px rgb(92 124 165 / 50%);
 }
 
 .android-button {
