@@ -1,7 +1,7 @@
 /*  –––––––––––––––––––––––VARIABLES––––––––––––––––––––––––––– */
 :root {
 	--primary-text-color: blue;
-    --secondary--text-color: lightblue ;
+    --secondary-text-color: lightblue ;
     
     --radio-checked-color: #47c1b3;
     --radio-unchecked-color: #d8f2ef;
@@ -44,6 +44,9 @@ body.preload * {
     visibility: hidden !important;
 }
 
+.blue-text {
+    color: var(--primary-text-color);
+}
 /*-------------------PAGE CONTAINER------------------------------------- */
 .page-container {
     width: 200px;
