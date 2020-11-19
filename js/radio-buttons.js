@@ -1,33 +1,24 @@
 /* REMOVE BODY CLASS FOR HIDING ANIMATIONS */
 
-const elementsToHideBeforeLoad = document.querySelectorAll('.transition-background, .custom-radio');
-const elementsToHideAfterLoad = document.querySelectorAll('.android-to-hide-after-load, .ios-to-hide-after-load');
+const elementToHideBeforeLoad = document.querySelector('.ios-button');
+const elementToHideAfterLoad = document.querySelector('.ios-to-hide-after-load');
 
-//RESET ALL ANIMATION TO 0S ON LOAD
+/* RESET ALL ANIMATION TO 0S ON LOAD -> REMOVE PRELOAD CLASS*/
 setTimeout(function(){
     document.body.className='';
 }, 2000);
 
-//HIDE ELEMENTS UNTIL LOADED
-elementsToHideBeforeLoad.forEach((element) => {
-    element.classList.add('hidden');
-})
+/* HIDE ELEMENTS UNTIL LOADED */
+elementToHideBeforeLoad.classList.add('hidden');
 
-//SHOW AFTER LOADED
-setTimeout(function(){
-    elementsToHideBeforeLoad.forEach((element) => {
-        element.classList.remove('hidden');
-    })
+/* SHOW AFTER LOADED */
+/* HIDE MOCKUP AFTER LOADED */
+setTimeout(function() {
+    elementToHideBeforeLoad.classList.remove('hidden');
+    elementToHideAfterLoad.classList.add('hidden');
 }, 1000);
 
-//REMOVE MOCKUP AFTER LOADED
-setTimeout(function(){
-    elementsToHideAfterLoad.forEach((element) => {
-        element.classList.add('hidden');
-    })
-}, 1000);
-
-/* ******** GET BOTH RADIO INPUTS ************ */
+/* GET BOTH RADIO INPUTS */
 
 const clickEffectElement = document.querySelectorAll('.radio-group input');
 
@@ -41,14 +32,14 @@ function animateClick(event) {
     if (isAndroid) {
         animatedElement = document.querySelector('.android .click-effect');
     }
-
+    //PLAY ANIMATIION
     animatedElement.classList.add('click-effect-animation');
-
+    //REMOVE ANIMATION CLASS
     setTimeout(function() {
-        animatedElement.classList.remove('click-effect-animation')
+        animatedElement.classList.remove('click-effect-animation');
     }, 1000)
 }
 
 clickEffectElement.forEach(element => {
-    element.addEventListener('click', animateClick, false)
+    element.addEventListener('click', animateClick, false);
 })
