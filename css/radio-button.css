@@ -43,6 +43,7 @@ body.preload * {
 .hidden {
     visibility: hidden !important;
 }
+
 /*-------------------PAGE CONTAINER------------------------------------- */
 .page-container {
     width: 200px;
@@ -73,10 +74,6 @@ body.preload * {
 
 .secondary-header-text {
     font-size: 1rem;
-}
-
-.blue-text {
-    color: var(--primary-text-color);
 }
 
 /******* RADIO BUTTONS **********/
@@ -128,7 +125,7 @@ body.preload * {
 
 .radio-group:active{
     background-color: transparent;
-    
+
 }
 .radio-group:focus{
     background-color: transparent;
@@ -171,105 +168,8 @@ body.preload * {
     position: absolute;
     height: 1.5rem;
     width: 1.5rem;
-    border-radius: 50%;
-    left: 1.5rem;
-}
-
-.radio-group input:checked ~ .ios-button {
-    animation: coming-up-radio-unchecked .5s linear 1s 1 both;
-}
-
-.radio-group input:not(:checked) ~ .ios-button {
-    animation: jumping-radio-unchecked .5s linear .5s 1 both;
-    z-index: 5;
-}
-
-.radio-group input:checked ~ .android-button {
-    animation: coming-up-radio-checked .5s linear 1s 1 both;
-}
-.radio-group input:not(:checked) ~ .android-button {
-    animation: jumping-radio-checked .5s linear .5s 1 forwards;
-}
-
-.transition-background {
-    width: 1.5rem;
-    height: 1.5rem;
     border-radius: .75rem;
-    position: absolute;
     left: 1.5rem;
-    visibility: hidden;
-}
-
-.android .android-background-transition {
-    background: var(--radio-unchecked-color);
-    top: .25rem;
-    opacity: 0;
-    height: 4.5rem;
-    /* outline: 2px dashed red; */
-}
-
-.android .ios-background-transition {
-    background: var(--radio-unchecked-color);
-    bottom: -2.75rem;
-    opacity: 1;
-    height: 1.5rem;
-    /* outline: 2px dotted blue; */
-}
-
-.android input:not(:checked) ~ .android-background-transition {
-    height: 1.5rem;
-    opacity: 1;
-    transition: height .5s linear 1s, opacity 0s linear 1s;
-    visibility: visible;
-}
-
-
-.android input:not(:checked) ~ .ios-background-transition {
-    height: 4.5rem;
-    opacity: 0;
-    transition: height .5s linear 0s, opacity 0s linear 1s;
-    visibility: visible;
-}
-
-.android .ios-background-transition-up {
-    background: var(--radio-checked-color);
-    bottom: -2.75rem;
-    opacity: 1;
-    height: 1.5rem;
-    /* outline: 2px dotted yellowgreen; */
-}
-
-.android input:checked ~ .ios-background-transition-up {
-    height: 4.5rem;
-    opacity: 0;
-    transition: height .5s linear 0s, opacity 0s linear 1s;
-    visibility: visible;
-}
-
-.android .android-background-transition-up {
-    background: var(--radio-checked-color);
-    top: 0.25rem;
-    opacity: 1;
-    height: 4.5rem;
-    /* outline: 2px dotted rgb(192, 50, 205); */
-}
-
-.android input:checked ~ .android-background-transition-up {
-    height: 1.5rem;
-    opacity: 1;
-    transition: height .5s linear 1s, opacity 0s linear 1s, visibility 0s linear 1s;
-    visibility: visible;
-}
- 
-.android-to-hide-after-load {
-    position: absolute;
-    height: 1.5rem;
-    width: 1.5rem;
-    border-radius: 50%;
-    left: 1.5rem;
-    top: .25rem;
-    /* outline: teal solid 10px; */
-    background-color: var(--radio-checked-color);
 }
 
 .ios-to-hide-after-load {
@@ -283,6 +183,26 @@ body.preload * {
     background-color: var(--radio-unchecked-color);
 }
 
+.radio-group input:checked ~ .ios-button {
+/* animation: coming-up-radio-unchecked .5s linear 1s 1 both; */
+    animation: move-radio-up-ios 2s linear 0s 1 both;
+}
+
+.radio-group input:not(:checked) ~ .ios-button {
+    animation: jumping-radio-unchecked .5s linear .5s 1 both;
+    z-index: 5;
+/* animation: move-radio-down-ios 4s linear 0s 1 forwards;  */
+/* z-index: 5; */
+}
+
+.radio-group input:checked ~ .android-button {
+/* animation: coming-up-radio-checked .5s linear 1s 1 both; */
+    animation: move-radio-up-android 2s linear 0s 1 both;
+}
+.radio-group input:not(:checked) ~ .android-button {
+    animation: jumping-radio-checked .5s linear .5s 1 forwards;
+}
+
 /****** ANIMATIONS****/
 
 @keyframes click-circles {
@@ -292,7 +212,6 @@ body.preload * {
     }
     1%{
         opacity: .5;
-
     }
     15%{
         border-width: 1rem;
@@ -316,14 +235,20 @@ body.preload * {
     }
 }
 
-@keyframes coming-up-radio-checked {
-    from {transform: translateY(3rem); }
-    to{transform: translateY(0rem);}
+@keyframes move-radio-up-ios {
+    0%   {margin-top: 0;}
+    25%  {margin-top: -3rem; height: 4.5rem;}
+    50%  {margin-top: -3rem; height: 4.5rem;}
+    /* 75%  {margin-top: -3rem; height: 4.5rem;} */
+    100% { margin-top: -6rem; height: 1.5rem;}
 }
 
-@keyframes coming-up-radio-unchecked {
-    from {transform: translateY(0rem); }
-    to{transform: translateY(-3rem);}
+@keyframes move-radio-up-android {
+    0%   {margin-top: 6rem;}
+    25%  {margin-top: 3rem; height: 4.5rem;}
+    50%  {margin-top: 3rem; height: 4.5rem;}
+    /* 75%  {margin-top: 3rem; height: 4.5rem;} */
+    100% { margin-top: 0rem; height: 1.5rem;}
 }
 
 @keyframes jumping-radio-checked {
@@ -345,9 +270,9 @@ body.preload * {
     100% {
         transform: translateY(3rem);
     }
-  }
+}
 
-  @keyframes jumping-radio-unchecked {
+@keyframes jumping-radio-unchecked {
     0% {
         transform: translateY(-3rem);
     }
@@ -377,4 +302,3 @@ body.preload * {
     font-weight: 600;
     margin-top: auto;
 }
-
