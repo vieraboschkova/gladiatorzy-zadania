@@ -1,0 +1,28 @@
+{
+  "name": "gladiatorzy-zadania",
+  "version": "1.0.0",
+  "description": "Zadania z grupy Gladiatorzy JS",
+  "main": "index.ts",
+  "dependencies": {
+    "@babel/core": "^7.12.7",
+    "@babel/preset-env": "^7.12.7",
+    "@babel/preset-typescript": "^7.12.7",
+    "@types/jest": "^26.0.15",
+    "babel-jest": "^26.6.3",
+    "jest": "^26.6.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vieraboschkova/gladiatorzy-zadania.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vieraboschkova/gladiatorzy-zadania/issues"
+  },
+  "homepage": "https://github.com/vieraboschkova/gladiatorzy-zadania#readme"
+}
