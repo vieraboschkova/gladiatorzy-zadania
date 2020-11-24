@@ -1,3 +1,5 @@
+const filteringWith = require('./index');
+
 const arrayForTesting: Object[] = [
   {
     "_id": "5e985a07feddae7617ac44f6",
@@ -91,7 +93,7 @@ const arrayForTesting: Object[] = [
     ]
   }
 ]
-const filteringWith = require('./index');
+
 
 test('checks if filter is long enough', () => {
   expect(filteringWith(arrayForTesting, 'a')).toStrictEqual([]);
