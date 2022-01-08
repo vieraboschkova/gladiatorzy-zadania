@@ -4,8 +4,6 @@ const tableData = [
   "name": "Ivy Mitchell",
   "age": 40,
   "gender": "female",
-  // "genderBUG": "female",
-  // "bug":"bug",
   "company": "TALAE",
   "email": "ivymitchell@talae.com",
   "phone": "+1 (838) 597-2008",
